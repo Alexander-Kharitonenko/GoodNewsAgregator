@@ -1,0 +1,25 @@
+﻿@model LoginViewModel
+
+<form asp-action="Login" asp-controller="Account" method="post" asp-antiforgery="true">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="row">
+        <div class="container">
+            <label asp-for="Email"></label>
+            <input type="email" asp-for="Email" />
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div class="container">
+            <label asp-for="Password"></label>
+            <input type="password" asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+        </div>
+        <div class="container">
+            <label asp-for="PasswordConfirmation"></label>
+            <input type="password" asp-for="PasswordConfirmation" />
+            <span asp-validation-for="PasswordConfirmation"></span>
+        </div>
+        <div>
+            <input type="submit" value="Login">
+        </div>
+    </div>
+</form>

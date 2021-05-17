@@ -1,0 +1,21 @@
+﻿@model ViewModelForNews
+<dev>
+
+  <div class="lenta">
+        <h1 class="upper">Лента новостей</h1>
+  </div>
+
+  @{     
+      foreach (NewsModelDTO News in Model.news)
+      {
+                await Html.RenderPartialAsync("AllNews", News);
+      }
+   }
+
+  <div class="paginationDiv">
+            
+     <paginator page-info="Model.pageInfo" page-action="news" ></paginator>
+         
+  </div>
+
+</dev>

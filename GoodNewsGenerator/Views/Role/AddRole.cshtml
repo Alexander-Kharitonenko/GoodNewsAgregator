@@ -1,0 +1,19 @@
+﻿@model AllRoleViewModel
+
+
+
+<div>
+    @{ 
+        foreach (RoleModelDTO role in Model.AllRole) 
+        {
+            <h5>@role.Id - @role.NameRole</h5>
+        }
+    }
+</div>
+<form asp-action="AddRole" asp-controller="Role" metod="post" asp-antiforgery="true">
+    <div class="container">
+        <label asp-for="@Model.Role.NameRole">Name role</label>
+        <input asp-for="@Model.Role.NameRole" type="text" />
+    </div>
+    <input type="submit" value="Add role">
+</form>

@@ -1,0 +1,9 @@
+﻿@model RoleViewModel
+
+        <lu>
+            @foreach (UserModelDTO user in Model.user)
+            {
+                <li>@user.Login - @user.Roles.NameRole</li>
+            }
+        </lu>
+       

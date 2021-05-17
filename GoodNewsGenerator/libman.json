@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jquery@3.6.0",
+      "destination": "wwwroot/js/"
+    },
+    {
+      "library": "popper.js@2.9.2",
+      "destination": "wwwroot/js/popper.js/"
+    }
+  ]
+}

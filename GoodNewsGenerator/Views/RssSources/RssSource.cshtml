@@ -1,0 +1,16 @@
+﻿@model ModelForViewRssSources
+
+
+<lu>
+    @foreach (var surce in Model.sources)
+    {
+        <li>@surce</li>
+    }
+</lu>
+
+<div>
+
+    <div>
+        <a class="btn btn-primary" asp-action="Create" asp-controller="RssSources">Добавить ресурс</a>
+    </div>
+</div>
