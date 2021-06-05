@@ -1,5 +1,5 @@
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=DESKTOP-VQADTTI;Database=DataGoodNews;Trusted_Connection=True;"
+    "DefaultConnection": "Server=DESKTOP-VQADTTI;Database=DataGoodNews;Trusted_Connection=True;MultipleActiveResultSets=true"
   }
 }

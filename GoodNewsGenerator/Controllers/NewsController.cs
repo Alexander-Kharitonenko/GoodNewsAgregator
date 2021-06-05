@@ -23,15 +23,15 @@ namespace GoodNewsGenerator.Controllers
     {
         public readonly INewsService DbNewsContext;
         public readonly ISourceService DbSourceContext;
-        private readonly TutByParser _TutByParser;
+        private readonly SputnikParser _Sputnik;
         private readonly OnlinerParser _OnlinerParser;
         private readonly belta _BeltaParser;
 
-        public NewsController(INewsService dbNewsContext, ISourceService dbSourceContext, TutByParser TutByParser, OnlinerParser onlinerParser, belta BeltaParser)
+        public NewsController(INewsService dbNewsContext, ISourceService dbSourceContext, SputnikParser sputnik, OnlinerParser onlinerParser, belta BeltaParser)
         {
             DbNewsContext = dbNewsContext;
             DbSourceContext = dbSourceContext;
-            _TutByParser = TutByParser;
+            _Sputnik = sputnik;
             _OnlinerParser = onlinerParser;
             _BeltaParser = BeltaParser;
         }
@@ -39,7 +39,7 @@ namespace GoodNewsGenerator.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User,Admin")]
         public IActionResult News(int page = 1)
         {
             int pageSize = 5;
@@ -68,13 +68,14 @@ namespace GoodNewsGenerator.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetNewsFromRss()
         {
 
             List<SourceModelDTO> RssSource = DbSourceContext.GetAllSource().ToList();
             List<NewsModelDTO> News = new List<NewsModelDTO>();
 
-            Guid TuTby = RssSource.FirstOrDefault(x => x.SourseURL.Contains("tut.by")).Id;
+            Guid Sputnik = RssSource.FirstOrDefault(x => x.SourseURL.Contains("sputnik.by")).Id;
             Guid Onliner = RssSource.FirstOrDefault(x => x.SourseURL.Contains("onliner.by")).Id;
             Guid Belta = RssSource.FirstOrDefault(x => x.SourseURL.Contains("belta.by")).Id;
 
@@ -85,15 +86,15 @@ namespace GoodNewsGenerator.Controllers
                 try
                 {
 
-                    if (news.All(el => el.SourcesId.Equals(TuTby)))
+                    if (news.All(el => el.SourcesId.Equals(Sputnik)))
                     {
 
                         Parallel.ForEach(news, async (newsDto) =>
                         {
-                            (string content, string Img) newsBody = await _TutByParser.Parse(newsDto.NewsURL);
+                            (string content, string Img) newsBody = await _Sputnik.Parse(newsDto.NewsURL);
                             if (newsBody.content != null)
                             {
-                                Log.Warning($"Новость из ТУТ.бай не распарсилась - {newsDto.NewsURL}");
+                                Log.Warning($"Новость из Sputnik не распарсилась - {newsDto.NewsURL}");
                             }
                             newsDto.Content = newsBody.content;
                             newsDto.Img = newsBody.Img;
@@ -101,7 +102,7 @@ namespace GoodNewsGenerator.Controllers
 
                         //foreach (var newsDto in news)
                         //{
-                        //    var newsBody = await _TutByParser.Parse(newsDto.NewsURL);
+                        //    var newsBody = await _Sputnik.Parse(newsDto.NewsURL);
                         //    newsDto.Content = newsBody.content;
                         //    newsDto.Img = newsBody.Img;
                         //}
@@ -163,6 +164,7 @@ namespace GoodNewsGenerator.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "User,Admin")]
         public IActionResult Details(Guid id)
         {
             IEnumerable<NewsModelDTO> news = DbNewsContext.GetNewsById(id);
@@ -189,6 +191,5 @@ namespace GoodNewsGenerator.Controllers
                 return View(detailsNews);
             }
         }
-
     }
 }

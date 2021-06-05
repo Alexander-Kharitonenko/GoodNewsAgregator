@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoodNewsGenerator", "GoodNe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityGeneratorNews", "NewsGenerator\EntityGeneratorNews.csproj", "{367FEA12-BEF9-4C93-9080-5EF8102C40A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTO_Models", "DTO_Models_For_GoodNewsGenerator\DTO_Models.csproj", "{DC55B7DE-E6B8-4CBA-BC53-026CB5F2F1E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTO_Models", "DTO_Models_For_GoodNewsGenerator\DTO_Models.csproj", "{DC55B7DE-E6B8-4CBA-BC53-026CB5F2F1E7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DTO_Models_For_GoodNewsGenerator", "DTO_Models_For_GoodNewsGenerator", "{A4B524FA-5C02-4B56-8827-4DC9511F7093}"
 EndProject
@@ -21,13 +21,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Implementation_For_Reposito
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Implementation_For_Services", "Implementation_For_Services", "{6BF27DCD-2FDF-4D12-B239-D6EE90BF60A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoodNewsGenerator_Interfaces_Repositories", "GoodNewsGenerator_Interfaces_Repositories\GoodNewsGenerator_Interfaces_Repositories.csproj", "{75A78741-CF64-4826-88B2-B20B74E7AAF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoodNewsGenerator_Interfaces_Repositories", "GoodNewsGenerator_Interfaces_Repositories\GoodNewsGenerator_Interfaces_Repositories.csproj", "{75A78741-CF64-4826-88B2-B20B74E7AAF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoodNewsGenerator_Interfaces_Servicse", "GoodNewsGenerator_Interfaces_Servicse\GoodNewsGenerator_Interfaces_Servicse.csproj", "{357DB4A8-1F2F-4997-B7D9-05D24F554108}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoodNewsGenerator_Interfaces_Servicse", "GoodNewsGenerator_Interfaces_Servicse\GoodNewsGenerator_Interfaces_Servicse.csproj", "{357DB4A8-1F2F-4997-B7D9-05D24F554108}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoodNewsGenerator_Implementation_Repositories", "GoodNewsGenerator_Implementation_Repositories\GoodNewsGenerator_Implementation_Repositories.csproj", "{13DE7FAA-B65E-48A0-9289-CBE39CFA7699}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoodNewsGenerator_Implementation_Repositories", "GoodNewsGenerator_Implementation_Repositories\GoodNewsGenerator_Implementation_Repositories.csproj", "{13DE7FAA-B65E-48A0-9289-CBE39CFA7699}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoodNewsGenerator_Implementation_Services", "GoodNewsGenerator_Implementation_Services\GoodNewsGenerator_Implementation_Services.csproj", "{BBD2D050-C437-40AF-B5AD-A6420EB11EB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoodNewsGenerator_Implementation_Services", "GoodNewsGenerator_Implementation_Services\GoodNewsGenerator_Implementation_Services.csproj", "{BBD2D050-C437-40AF-B5AD-A6420EB11EB8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoodNewsGeneratorAPI", "GoodNewsGeneratorAPI\GoodNewsGeneratorAPI.csproj", "{8450B392-6E3C-42ED-89FB-C1212AA7265F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dll_CQRSandMediator_For_API", "Dll_CQRSandMediator_For_API", "{074F560B-1D0F-44C3-9483-1D4FBD81D7E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQRSandMediatorForApi", "CQRSandMediatorForApi\CQRSandMediatorForApi.csproj", "{9AE1949C-30FD-4F38-85AB-657B9459EC35}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +69,14 @@ Global
 		{BBD2D050-C437-40AF-B5AD-A6420EB11EB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBD2D050-C437-40AF-B5AD-A6420EB11EB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBD2D050-C437-40AF-B5AD-A6420EB11EB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8450B392-6E3C-42ED-89FB-C1212AA7265F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8450B392-6E3C-42ED-89FB-C1212AA7265F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8450B392-6E3C-42ED-89FB-C1212AA7265F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8450B392-6E3C-42ED-89FB-C1212AA7265F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AE1949C-30FD-4F38-85AB-657B9459EC35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AE1949C-30FD-4F38-85AB-657B9459EC35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AE1949C-30FD-4F38-85AB-657B9459EC35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AE1949C-30FD-4F38-85AB-657B9459EC35}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +88,7 @@ Global
 		{357DB4A8-1F2F-4997-B7D9-05D24F554108} = {B64DD898-5577-4506-B203-5EBD644FDF97}
 		{13DE7FAA-B65E-48A0-9289-CBE39CFA7699} = {594D3FBB-3ACA-481D-9427-FA56A0427FE8}
 		{BBD2D050-C437-40AF-B5AD-A6420EB11EB8} = {6BF27DCD-2FDF-4D12-B239-D6EE90BF60A3}
+		{9AE1949C-30FD-4F38-85AB-657B9459EC35} = {074F560B-1D0F-44C3-9483-1D4FBD81D7E7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13F72C48-1FC0-437E-A762-27E42F641D1D}

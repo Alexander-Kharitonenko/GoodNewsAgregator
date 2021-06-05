@@ -7,6 +7,6 @@ namespace GoodNewsGenerator.Models.ViewModel.Rss
 {
     public class ModelForViewRssSources
     {
-        public IEnumerable<string> sources;
+        public IEnumerable<KeyValuePair<string, Guid>> sources;
     }
 }

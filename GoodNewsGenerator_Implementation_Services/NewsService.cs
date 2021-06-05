@@ -92,7 +92,7 @@ namespace GoodNewsGenerator_Implementation_Services
                   .Select(n => n.NewsURL)
                   .ToListAsync();
 
-                const string tutUrl = "news.tut.by";
+                const string SputnikUrl = "sputnik.by/economy/";
                 const string OnlinerUrl = "people.onliner";
                 const string beltaUrl = "belta.by";
 
@@ -101,7 +101,7 @@ namespace GoodNewsGenerator_Implementation_Services
 
                     if (!currentNewsUrls.Any(url => url.Equals(SyndicationItems.Id)))
                     {
-                        if (SyndicationItems.Id.Contains(beltaUrl) || SyndicationItems.Id.Contains(tutUrl) || SyndicationItems.Id.Contains(OnlinerUrl))
+                        if (SyndicationItems.Id.Contains(beltaUrl) || SyndicationItems.Id.Contains(OnlinerUrl) || SyndicationItems.Id.Contains(SputnikUrl))
                         {
                             NewsModelDTO news = new NewsModelDTO()
                             {
@@ -118,9 +118,7 @@ namespace GoodNewsGenerator_Implementation_Services
 
                 }
             }
-
             return News;
-
         }
     }
 }

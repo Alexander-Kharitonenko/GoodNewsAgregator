@@ -46,10 +46,10 @@ namespace GoodNewsGenerator_Implementation_Services
             _unitOfWork.SaveChangesAsync();
         }
 
-        public void DeletSourceById(Guid id)
+        public async Task DeletSourceById(Guid id)
         {          
-            _unitOfWork.Source.Remove(id);
-            _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.Source.Remove(id);
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public IEnumerable<SourceModelDTO> GetAllSource()
@@ -62,7 +62,7 @@ namespace GoodNewsGenerator_Implementation_Services
         public SourceModelDTO GetSourceById(Guid id)
         {
             List<Source> source = _unitOfWork.Source.GetById(id).ToList();
-            SourceModelDTO source1 = Mapper.Map<SourceModelDTO>(source);
+            SourceModelDTO source1 = Mapper.Map<SourceModelDTO>(source.FirstOrDefault());
             return source1;
         }
     }

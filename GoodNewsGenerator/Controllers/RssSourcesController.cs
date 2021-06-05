@@ -1,6 +1,7 @@
 ﻿using DTO_Models_For_GoodNewsGenerator;
 using GoodNewsGenerator.Models.ViewModel.Rss;
 using GoodNewsGenerator_Interfaces_Servicse;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
@@ -11,38 +12,50 @@ using System.Threading.Tasks;
 
 namespace GoodNewsGenerator.Controllers
 {
-    public class RssSources : Controller
+    [Authorize(Roles = "Admin")]
+    public class RssSourcesController : Controller
     {
 
         private readonly ISourceService DbContext;
 
-        public RssSources(ISourceService dbContext) 
+        public RssSourcesController(ISourceService dbContext)
         {
             DbContext = dbContext;
         }
 
-        public ActionResult RssSource() // получение всех не повторяющихся источников
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult RssSource() // получение всех не повторяющихся источников
         {
+
             ModelForViewRssSources rssSources = new ModelForViewRssSources()
             {
-                sources = DbContext.GetAllSource().Select(el => el.SourseURL).Distinct().ToList()
+                sources = DbContext.GetAllSource().ToDictionary(el => el.SourseURL, elm => elm.Id).Distinct()
+
             };
 
             if (rssSources.sources != null)
             {
                 return View(rssSources);
             }
-            else 
+            else
             {
                 return Redirect(nameof(ErroNullSourse));
             }
 
         }
 
-     
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Create() 
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ViewModelForCreateRss collection)
+        [Authorize(Roles = "Admin")]
+        public IActionResult Create(ViewModelForCreateRss collection)
         {
             try
             {
@@ -56,7 +69,7 @@ namespace GoodNewsGenerator.Controllers
 
                     DbContext.Add(source);
 
-                    return RedirectToAction(nameof(RssSource));
+                    return Redirect(nameof(RssSource));
                 }
             }
             catch (Exception e)
@@ -72,61 +85,29 @@ namespace GoodNewsGenerator.Controllers
             return View();
         }
 
-        // GET: RssSources/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
-        // GET: RssSources/Create
         [HttpGet]
-        public ActionResult Create()
+        public IActionResult Delete()
         {
             return View();
         }
 
-     
-
-        // GET: RssSources/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: RssSources/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(ViewModelForDelete Rss)
         {
-            try
+            SourceModelDTO source = DbContext.GetSourceById(Rss.id);
+            if (source != null)
             {
-                return RedirectToAction(nameof(Index));
+                await DbContext.DeletSourceById(source.Id);
+               return Redirect(nameof(RssSource));
             }
-            catch
-            {
-                return View();
-            }
+
+           return View();
+            
+           
         }
 
-        // GET: RssSources/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: RssSources/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

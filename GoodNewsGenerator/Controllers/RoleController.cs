@@ -53,6 +53,7 @@ namespace GoodNewsGenerator.Controllers
                 Role = new RoleModelDTO()
             };
             return View(allRole);
+            
         }
 
         [HttpPost]

@@ -1,11 +1,18 @@
 ﻿<!-- Example single danger button -->
-<div class="dropdown">
+<div class="btn-group">
     <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        Action
+        Настроки админа
     </button>
     <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Action</a></li>
-        <li><a class="dropdown-item" href="#">Another action</a></li>
-        <li><a class="dropdown-item" href="#">Something else here</a></li>
+        <li><a class="dropdown-item" asp-action="AddRole" asp-controller="Role">Добавить роль</a></li>
+        <li><a class="dropdown-item" asp-action="Create" asp-controller="RssSources">Добавить RSS</a></li>
+        <li><a class="dropdown-item" asp-action="Delete" asp-controller="RssSources">Удалить Rss</a></li>
+        <li>
+            <form asp-action="GetNewsFromRss" asp-controller="News" method="post" asp-antiforgery="true">
+                <input type="submit" value="Звгрузить новые новости">
+            </form>
+        </li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Separated link</a></li>
     </ul>
 </div>

@@ -42,6 +42,7 @@
 
   <ItemGroup>
     <Folder Include="Services\Policy\" />
+    <Folder Include="wwwroot\js\jsbootstrap\" />
   </ItemGroup>
 
 </Project>

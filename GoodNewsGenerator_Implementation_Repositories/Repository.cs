@@ -62,8 +62,6 @@ namespace GoodNewsGenerator_Implementation_Repositories
         {
              T result = await Table.FirstOrDefaultAsync(entity => entity.Id.Equals(id));
              Table.Remove(result);
-          
-
         }
 
         public async Task RemoveRange(IEnumerable<T> entity)
@@ -76,8 +74,6 @@ namespace GoodNewsGenerator_Implementation_Repositories
             T Entitu = GetById(entity.Id).FirstOrDefault();
             Entitu = entity;
             Table.Update(Entitu);
-            
-
         }
     }
 }

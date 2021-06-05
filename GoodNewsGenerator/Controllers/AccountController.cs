@@ -4,6 +4,7 @@ using GoodNewsGenerator.Models.ViewModel.Account;
 using GoodNewsGenerator_Interfaces_Servicse;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace GoodNewsGenerator.Controllers
 {
+   
     public class AccountController : Controller
     {
         private readonly IUserService DbContextUser;
@@ -26,6 +28,7 @@ namespace GoodNewsGenerator.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult AdminAccount() 
         {
             return View();

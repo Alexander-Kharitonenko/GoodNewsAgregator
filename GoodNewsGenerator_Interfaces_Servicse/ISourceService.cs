@@ -16,7 +16,7 @@ namespace GoodNewsGenerator_Interfaces_Servicse
 
         IEnumerable<SourceModelDTO> GetAllSource();
 
-        void DeletSourceById(Guid id);
+       Task DeletSourceById(Guid id);
 
     }
 }
