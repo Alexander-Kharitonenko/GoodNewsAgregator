@@ -51,6 +51,7 @@ namespace GoodNewsGeneratorAPI
             services.AddScoped<IRequestHandler<GetAllNewsQueriy, IEnumerable<NewsModelDTO>>, GetAllNewsQueryHandler>();
             services.AddScoped<IRequestHandler<GetUrlFromNewsQueriy, IEnumerable<string>>, GetUrlFromNewsQueriyHendler>();
             services.AddScoped<IRequestHandler<AddNewsCommand, int>, AddNewsCommandHendler>();
+            services.AddScoped<IRequestHandler<UpdateNewsCommand, int>, UpdateNewsCommandHendler>();
             //rssSource Hendler
             services.AddScoped<IRequestHandler<GetAllRssSourceQueriy, IEnumerable<SourceModelDTO>>, GetAllRssSourceQueriyHendler>();
             services.AddScoped<IRequestHandler<GetRssSourceByIdQueriy, SourceModelDTO>, GetRssSourceByIdQueriyHendler>();
@@ -86,7 +87,7 @@ namespace GoodNewsGeneratorAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider provider)
         {
             if (env.IsDevelopment())
             {
@@ -98,13 +99,14 @@ namespace GoodNewsGeneratorAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

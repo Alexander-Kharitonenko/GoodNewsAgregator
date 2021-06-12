@@ -22,11 +22,14 @@ namespace CQRSandMediatorForApi.CommandHandlers
             Mapper = mapprer;
         }
 
+        
         public async Task<int> Handle(AddNewsCommand request, CancellationToken cancellationToken)
         {
             IEnumerable<News> allNews = request.AllNews.Select(el => Mapper.Map<News>(el));
             await DbContext.News.AddRangeAsync(allNews);
             return await DbContext.SaveChangesAsync();
         }
+
+        
     }
 }

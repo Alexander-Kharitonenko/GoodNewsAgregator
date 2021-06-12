@@ -12,5 +12,8 @@ namespace GoodNewsGenerator_Interfaces_Servicse
 
         Task<IEnumerable<NewsModelDTO>> GetNewsFromRssSource();
 
+        Task CoefficientPositivity();
+
+
     }
 }

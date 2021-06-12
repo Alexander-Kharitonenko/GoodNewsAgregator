@@ -24,6 +24,7 @@ namespace GoodNewsGeneratorAPI.Controllers
         public async Task<IActionResult> Get(Guid id)
         {
            NewsModelDTO news = await NewsCQRService.GetNewsById(id);
+           
             return Ok(news);
         }
 
@@ -32,6 +33,7 @@ namespace GoodNewsGeneratorAPI.Controllers
         public async Task<IActionResult> Get()
         {
             IEnumerable<NewsModelDTO> news = await NewsCQRService.GetAllNews();
+            await NewsCQRService.CoefficientPositivity();
             return Ok(news);
         }
 

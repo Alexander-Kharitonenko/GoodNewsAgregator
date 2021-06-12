@@ -25,12 +25,12 @@ namespace GoodNewsGeneratorAPI
             {
                 Log.Information("Starting web host");
                 CreateHostBuilder(args).Build().Run();
-             
+
             }
             catch (Exception ex)
             {
                 Log.Fatal(ex, "Host terminated unexpectedly");
-                
+
             }
             finally
             {
