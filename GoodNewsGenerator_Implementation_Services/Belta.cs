@@ -27,7 +27,7 @@ namespace GoodNewsGenerator_Implementation_Services
                 HtmlDocument htmlDoc = web.Load(url);
                 HtmlNode Content = htmlDoc.DocumentNode.SelectSingleNode("//body//div[@class='js-mediator-article']//p[normalize-space()]");
 
-                content = regex.Replace(Content.InnerHtml, String.Empty).Replace(@"&nbsp;", " ").Replace("&mdash;", " ").Replace("&laquo;", " ").Replace("&raquo;", " ").Replace("&hellip;", " ").Replace("&thinsp;", "");
+                content = regex.Replace(Content.InnerHtml, String.Empty).Replace(@"&nbsp;", " ").Replace("&mdash;", " ").Replace("&laquo;", " ").Replace("&raquo;", " ").Replace("&hellip;", " ").Replace("&thinsp;", "").Replace("&nbsp;", " "); ;
 
                 Img = htmlDoc.DocumentNode.SelectSingleNode("//body//div[@class='news_img_slide']//picture//img")?.GetAttributeValue("src", null);
                 if (Img == null)

@@ -41,9 +41,9 @@ namespace GoodNewsGeneratorAPI.Controllers
         [Route("Сreate")]
         public async Task<IActionResult> Post()
         {
-            IEnumerable<NewsModelDTO> x = await NewsCQRService.GetNewsFromRssSource();
+            IEnumerable<NewsModelDTO> response = await NewsCQRService.GetNewsFromRssSource();
             
-            return Ok(x);
+            return Ok(response);
         }
     }
 }

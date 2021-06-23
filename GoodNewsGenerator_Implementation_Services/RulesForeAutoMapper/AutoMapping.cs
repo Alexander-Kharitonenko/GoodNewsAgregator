@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DTO_Models;
 using DTO_Models_For_GoodNewsGenerator;
 using EntityGeneratorNews.Data;
 using System;
@@ -26,6 +27,11 @@ namespace GoodNewsGenerator_Implementation_Services.RulesForeAutoMapper
 
             CreateMap<Role, RoleModelDTO>();
             CreateMap<RoleModelDTO, Role>();
+
+            CreateMap<RefreshTokenModelDTO, RefreshToken>();
+            CreateMap<RefreshToken, RefreshTokenModelDTO>();
+
+
 
         }
     }

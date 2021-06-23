@@ -31,7 +31,7 @@ namespace GoodNewsGenerator_Implementation_Services
                 {
                     Content = htmlDoc.DocumentNode.SelectSingleNode("//body//div[@class='news-grid__part news-grid__part_1']//div[@class='news-text']//p");
                 }
-                content = regex.Replace(Content.InnerHtml, String.Empty).Replace(@"&nbsp;", " ").Replace("&mdash;", " ").Replace("&laquo;", " ").Replace("&raquo;", " ").Replace("&hellip;", " ").Replace("&thinsp;", "");
+                content = regex.Replace(Content.InnerHtml, String.Empty).Replace(@"&nbsp;", " ").Replace("&mdash;", " ").Replace("&laquo;", " ").Replace("&raquo;", " ").Replace("&hellip;", " ").Replace("&thinsp;", " ").Replace("&nbsp;", " ");
 
                 string css = htmlDoc.DocumentNode.SelectSingleNode("//body//div[@class='news-header__image']").GetAttributeValue("style", null);
 
@@ -46,6 +46,8 @@ namespace GoodNewsGenerator_Implementation_Services
             catch (Exception e) 
             {
                 Log.Warning(e, $"Не удалось распарсить страницу{url} - {e.Message} - {e.StackTrace}");
+
+
             }
             return result;
         }

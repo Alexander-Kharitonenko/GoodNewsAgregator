@@ -40,7 +40,7 @@ namespace GoodNewsGenerator_Implementation_Services
 
         public async Task<RoleModelDTO> GetRoleById(Guid id)
         {
-            GetRoleByIdQueriy requesr = new GetRoleByIdQueriy();
+            GetRoleByIdQueriy requesr = new GetRoleByIdQueriy() { id = id };
             RoleModelDTO role = await Mediator.Send(requesr);
             return role;
         }

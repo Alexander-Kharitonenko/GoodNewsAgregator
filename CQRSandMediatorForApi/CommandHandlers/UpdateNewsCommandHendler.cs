@@ -26,18 +26,18 @@ namespace CQRSandMediatorForApi.CommandHandlers
         public async Task<int> Handle(UpdateNewsCommand request, CancellationToken cancellationToken)
         {
             IEnumerable<News> News = request.updateNews.Select(el => Mapper.Map<News>(el));
-            ConcurrentBag<News> UpdateNews = new ConcurrentBag<News>();
+            List<News> UpdateNews = new List<News>();
 
             foreach (News newsUpd in News)
             {
 
-                var DBnews = Dbcontext.News.FirstOrDefault(el => el.Id == newsUpd.Id);
+                News DBnews = Dbcontext.News.FirstOrDefault(el => el.Id == newsUpd.Id);
                 DBnews.CoefficientPositive = newsUpd.CoefficientPositive;
-                UpdateNews.Add(DBnews);
+                await Dbcontext.SaveChangesAsync();
             }
 
-            Dbcontext.News.UpdateRange(UpdateNews);
             return await Dbcontext.SaveChangesAsync();
-        }
+
+        }                          
     }
 }

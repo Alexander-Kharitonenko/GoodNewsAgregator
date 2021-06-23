@@ -12,6 +12,7 @@ using Serilog;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -30,13 +31,13 @@ namespace GoodNewsGenerator_Implementation_Services
     {
         private readonly IMediator Mediator;
         private readonly IMapper _Mapper;
-       
+
 
         public NewsCQRService(IMediator mediator, IMapper mapper)
         {
             Mediator = mediator;
             _Mapper = mapper;
-           
+
         }
 
 
@@ -127,8 +128,8 @@ namespace GoodNewsGenerator_Implementation_Services
 
             return news;
         }
-        
-        public async Task CoefficientPositivity()    
+
+        public async Task CoefficientPositivity()
         {
 
             IEnumerable<NewsModelDTO> allNews = await Mediator.Send(new GetAllNewsQueriy());
@@ -138,27 +139,22 @@ namespace GoodNewsGenerator_Implementation_Services
             int y;
             string path = @"C:\Users\Александр\Desktop\С#\Проект35 - Генератор хороших новостей\GoodNewsGenerator\GoodNewsGeneratorAPI\AFINN-ru.json";
 
-            try
+            List<NewsModelDTO> News = allNews.Where(el => el.CoefficientPositive == null).Take(30).ToList();
+
+            foreach (NewsModelDTO news in News)
             {
-                foreach (NewsModelDTO news in allNews)
+                using (HttpClient request = new HttpClient())
                 {
-
-                    using (HttpClient request = new HttpClient())
+                    request.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json")); // говорим что формат заголовка по умолчанию json
+               
+                    HttpRequestMessage postRequest = new HttpRequestMessage(HttpMethod.Post, "http://api.ispras.ru/texterra/v1/nlp?targetType=lemma&apikey=a3b5afea2ad9a4c948f4457db9342383415605dd")
                     {
-                        request.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json")); // говорим что формат заголовка по умолчанию json
+                        Content = new StringContent("[{\"text\":\"" + news.Content + "\"}]", Encoding.UTF8, "application/json")
+                    }; //создаём запрос который мы зарание настроили как HttpMethod.Post по адресу http://api.ispras.ru и формат контента этого запроса json
 
-                        HttpRequestMessage postRequest = new HttpRequestMessage(HttpMethod.Post, "http://api.ispras.ru/texterra/v1/nlp?targetType=lemma&apikey=a3b5afea2ad9a4c948f4457db9342383415605dd")
-                        {
-                            Content = new StringContent("[{\"text\":\"" + news.Content + "\"}]", Encoding.UTF8, "application/json")
-                        }; //создаём запрос который мы зарание настроили как HttpMethod.Post по адресу http://api.ispras.ru и формат контента этого запроса json
+                    HttpResponseMessage respons = await request.SendAsync(postRequest); // SendAsync отправляет наш запрос и возвращает ответ
+                    data = await respons.Content.ReadAsStringAsync();
 
-                        HttpResponseMessage respons = await request.SendAsync(postRequest); // SendAsync отправляет наш запрос и возвращает ответ
-                        data = await respons.Content.ReadAsStringAsync();
-
-                        //парсим новость и даём ей оценку
-                        
-
-                    }
                     await using (FileStream sr = File.OpenRead($"{path}"))
                     {
                         byte[] array = new byte[sr.Length]; // создаём буфир записи а который будут записан считанный текст в виде массива байт
@@ -171,8 +167,8 @@ namespace GoodNewsGenerator_Implementation_Services
 
                         if (data != null)
                         {
-                            var contentData = Regex.Replace(Regex.Replace(Regex.Replace(data, @"[a-zA-Z0-9]", ""), @"[\""-.?!)}\]\[{(,]", ""), @"(:)\1+", ":").Split(':').ToList<string>();
-
+                            List<string> contentData = Regex.Replace(Regex.Replace(Regex.Replace(data, @"[a-zA-Z0-9]", ""), @"[\""-.?!)}\]\[{(,]", ""), @"(:)\1+", ":").Split(':').ToList<string>();
+                            contentData.RemoveAt(0);
                             foreach (KeyValuePair<string, string> items in Dictionari)
                             {
                                 if (contentData.Any(el => el.Contains(items.Key)))
@@ -186,18 +182,14 @@ namespace GoodNewsGenerator_Implementation_Services
                             }
                         }
 
+
+
                         news.CoefficientPositive = Coefficient;
                         Coefficient = 0;
                     }
                 }
-
-              await Mediator.Send(new UpdateNewsCommand() { updateNews = allNews });
-
-            } catch (Exception e)
-            {
-                Log.Error(e, $"{e.Message}", e.StackTrace);
             }
-            
+            await Mediator.Send(new UpdateNewsCommand() { updateNews = News });
         }
     }
 }

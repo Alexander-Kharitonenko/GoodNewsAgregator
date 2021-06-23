@@ -18,7 +18,7 @@ namespace GoodNewsGenerator.Models.ViewModel.News
 
         public virtual IEnumerable<CommentModelDTO> Comments { get; set; }
 
-        public float CoefficientPositive { get; set; }
+        public int? CoefficientPositive { get; set; }
 
         public DateTime DateTime { get; set; }
 

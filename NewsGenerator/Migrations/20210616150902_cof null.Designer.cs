@@ -4,14 +4,16 @@ using GoodNewsGenerator.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EntityGeneratorNews.Migrations
 {
     [DbContext(typeof(DbContextNewsGenerator))]
-    partial class DbContextNewsGeneratorModelSnapshot : ModelSnapshot
+    [Migration("20210616150902_cof null")]
+    partial class cofnull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,32 +83,6 @@ namespace EntityGeneratorNews.Migrations
                     b.HasIndex("SourcesId");
 
                     b.ToTable("News");
-                });
-
-            modelBuilder.Entity("EntityGeneratorNews.Data.RefreshToken", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateTimeToken")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ExpiresToken")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Key")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("EntityGeneratorNews.Data.Role", b =>
@@ -192,17 +168,6 @@ namespace EntityGeneratorNews.Migrations
                         .IsRequired();
 
                     b.Navigation("Sources");
-                });
-
-            modelBuilder.Entity("EntityGeneratorNews.Data.RefreshToken", b =>
-                {
-                    b.HasOne("EntityGeneratorNews.Data.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EntityGeneratorNews.Data.User", b =>
