@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DTO_Models_For_GoodNewsGenerator\DTO_Models.csproj" />
     <ProjectReference Include="..\NewsGenerator\EntityGeneratorNews.csproj" />
   </ItemGroup>
 

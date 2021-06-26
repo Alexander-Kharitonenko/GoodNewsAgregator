@@ -160,6 +160,7 @@ namespace GoodNewsGeneratorAPI
             app.UseHangfireDashboard();
             app.UseHangfireServer();
             RecurringJob.AddOrUpdate(() => NewsCQRService.CoefficientPositivity(), "* * * * *");
+            RecurringJob.AddOrUpdate(() => NewsCQRService.GetNewsFromRssSource(), "0 12 * * *");
 
             app.UseStaticFiles();//использование статических файлов из wwwroot
             app.UseHttpsRedirection();// использование https протакола 

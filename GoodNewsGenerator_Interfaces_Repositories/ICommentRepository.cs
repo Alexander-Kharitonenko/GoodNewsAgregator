@@ -1,4 +1,5 @@
-﻿using EntityGeneratorNews.Data;
+﻿using DTO_Models_For_GoodNewsGenerator;
+using EntityGeneratorNews.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace GoodNewsGenerator_Interfaces_Repositories
 {
    public interface ICommentRepository : IRepository<Comment>
    {
+      
    }
 }

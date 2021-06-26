@@ -58,7 +58,7 @@ namespace GoodNewsGenerator_Implementation_Services
             return allnews;
         }
 
-        public async Task<IEnumerable<NewsModelDTO>> GetNewsFromRssSource()
+        public async Task<IEnumerable<NewsModelDTO>> GetNewsFromRssSource()//
         {
             //1.Получить все источники
             IEnumerable<SourceModelDTO> allRss = await Mediator.Send(new GetAllRssSourceQueriy());

@@ -16,6 +16,7 @@ using System.ServiceModel.Syndication;
 using GoodNewsGenerator_Implementation_Services;
 using GoodNewsGenerator.Models.ViewModel.News;
 using GoodNewsGenerator.Services.Paginator;
+using System.Security.Claims;
 
 namespace GoodNewsGenerator.Controllers
 {
@@ -26,14 +27,17 @@ namespace GoodNewsGenerator.Controllers
         private readonly SputnikParser _Sputnik;
         private readonly OnlinerParser _OnlinerParser;
         private readonly belta _BeltaParser;
-
-        public NewsController(INewsService dbNewsContext, ISourceService dbSourceContext, SputnikParser sputnik, OnlinerParser onlinerParser, belta BeltaParser)
+        private readonly ICommentService CommentService;
+        private readonly IUserService UserService;
+        public NewsController(INewsService dbNewsContext, ISourceService dbSourceContext, SputnikParser sputnik, OnlinerParser onlinerParser, belta BeltaParser, ICommentService commentService, IUserService userService)
         {
             DbNewsContext = dbNewsContext;
             DbSourceContext = dbSourceContext;
             _Sputnik = sputnik;
             _OnlinerParser = onlinerParser;
             _BeltaParser = BeltaParser;
+            CommentService = commentService;
+            UserService = userService;
         }
 
 
@@ -165,7 +169,7 @@ namespace GoodNewsGenerator.Controllers
 
         [HttpGet]
         [Authorize(Roles = "User,Admin")]
-        public IActionResult Details(Guid id)
+        public async Task<IActionResult> Details(Guid id)
         {
             IEnumerable<NewsModelDTO> news = DbNewsContext.GetNewsById(id);
             NewsModelDTO NewsDetail = news.FirstOrDefault();
@@ -177,19 +181,45 @@ namespace GoodNewsGenerator.Controllers
             {
                 ViewModelForDetailsNews detailsNews = new ViewModelForDetailsNews()
                 {
-                   Id = NewsDetail.Id,
-                   SourcesId = NewsDetail.SourcesId,
-                   NewsURL = NewsDetail.NewsURL,
-                   CoefficientPositive = NewsDetail.CoefficientPositive,
-                   DateTime = NewsDetail.DateTime,
-                   Heading = NewsDetail.Heading,
-                   Img = NewsDetail.Img,
-                   Content = NewsDetail.Content,
-                   
+                    Id = NewsDetail.Id,
+                    SourcesId = NewsDetail.SourcesId,
+                    NewsURL = NewsDetail.NewsURL,
+                    CoefficientPositive = NewsDetail.CoefficientPositive,
+                    DateTime = NewsDetail.DateTime,
+                    Heading = NewsDetail.Heading,
+                    Img = NewsDetail.Img,
+                    Content = NewsDetail.Content,
+                    Comments = await CommentService.GetAllComents(NewsDetail.Id),
+                    
 
                 };
                 return View(detailsNews);
             }
+                
+            
+        }
+
+       
+
+        [HttpPost("id")]
+        [Authorize(Roles = "User,Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddComment(ViewModelForDetailsNews request)
+        {
+            string EmailUser =  HttpContext.User.Claims.FirstOrDefault(el => el.Type == ClaimsIdentity.DefaultNameClaimType).Value;
+           UserModelDTO user =  UserService.GetUserBy(EmailUser);
+
+            CommentModelDTO newsComment = new CommentModelDTO()
+            {
+                Id = Guid.NewGuid(),
+                DateTime = DateTime.Now,
+                NewsId = request.NewsId,
+                TextComment = request.CommentText,
+                UserId = user.Id
+
+            };
+            await CommentService.AddComents(newsComment);
+            return RedirectToAction(nameof(Details), "News",new { id = request.NewsId });
         }
     }
 }

@@ -65,6 +65,7 @@ namespace GoodNewsGenerator
             services.AddScoped<ISourceService, SourceService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<ICommentService, CommentsService>();
 
             services.AddTransient<SputnikParser>(); // выбераем Transient так как при каждом запросе нам необходим новый объект TutByParser
             services.AddTransient<OnlinerParser>();

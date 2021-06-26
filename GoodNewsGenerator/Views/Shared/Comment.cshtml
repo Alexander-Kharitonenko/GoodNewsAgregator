@@ -1,0 +1,10 @@
+﻿@model DTO_Models_For_GoodNewsGenerator.CommentModelDTO
+
+<div class="card comment-card col-sm-12">
+    <div class="card-body">
+        <h6>@Model.Users.Login</h6>
+        <p class="card-text">@Model.TextComment</p>
+        <h6>@Model.DateTime.ToString("g")</h6>
+
+    </div>
+</div>

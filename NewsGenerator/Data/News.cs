@@ -16,7 +16,6 @@ namespace EntityGeneratorNews.Data
         public string Heading { get; set; }
         public string Content { get; set; }
 
-
         public Guid SourcesId { get; set; }
         public virtual Source Sources { get; set; }
 

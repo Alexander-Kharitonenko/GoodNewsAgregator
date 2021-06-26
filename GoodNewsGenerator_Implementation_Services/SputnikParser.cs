@@ -30,6 +30,10 @@ namespace GoodNewsGenerator_Implementation_Services
                 if (Content == null)
                 {
                     Content = htmlDoc.DocumentNode.SelectSingleNode("//body//div[@id='article_body']//p");
+                    if (Content == null) 
+                    {
+                        Content = htmlDoc.DocumentNode.SelectSingleNode("//body//div[@class='page_container m-relative root']//div[@class='l-main m-oh']//div[@class='l-wrap m-clear']//div[@class='l-maincolumn m-static']//div[@class='b-article']//div[@class='b-article__lead']//p[normalize-space()]");
+                    }
                 }
 
                 Img = htmlDoc.DocumentNode.SelectSingleNode("//body//div[@class='page_container m-relative root']//div[@class='l-wrap l-header']//div[@class='b-header']//div[@class='b-article__header']//img")?.GetAttributeValue("src", @"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTrIUAHP1tTymrh_-Jn6ivvaKWkSLI8T57ulghIN86FWs58z7MmjCuXDlTIXZoUbZnprA&usqp=CAU");

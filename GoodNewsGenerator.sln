@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoodNewsGeneratorAPI", "Goo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dll_CQRSandMediator_For_API", "Dll_CQRSandMediator_For_API", "{074F560B-1D0F-44C3-9483-1D4FBD81D7E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQRSandMediatorForApi", "CQRSandMediatorForApi\CQRSandMediatorForApi.csproj", "{9AE1949C-30FD-4F38-85AB-657B9459EC35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CQRSandMediatorForApi", "CQRSandMediatorForApi\CQRSandMediatorForApi.csproj", "{9AE1949C-30FD-4F38-85AB-657B9459EC35}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

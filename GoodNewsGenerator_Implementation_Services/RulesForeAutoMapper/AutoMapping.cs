@@ -31,6 +31,9 @@ namespace GoodNewsGenerator_Implementation_Services.RulesForeAutoMapper
             CreateMap<RefreshTokenModelDTO, RefreshToken>();
             CreateMap<RefreshToken, RefreshTokenModelDTO>();
 
+            CreateMap<Comment, CommentModelDTO>();
+            CreateMap<CommentModelDTO, Comment>();
+
 
 
         }

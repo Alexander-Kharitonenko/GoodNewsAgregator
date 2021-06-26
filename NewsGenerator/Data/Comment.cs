@@ -17,6 +17,9 @@ namespace EntityGeneratorNews.Data
 
         public Guid UserId { get; set; }
         public virtual User Users { get; set; }
-        
+
+        public Guid NewsId { get; set; }
+        public virtual News Newss { get; set; }
+
     }
 }

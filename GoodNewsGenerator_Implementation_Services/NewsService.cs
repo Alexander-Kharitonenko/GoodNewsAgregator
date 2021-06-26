@@ -18,10 +18,12 @@ namespace GoodNewsGenerator_Implementation_Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _Mapper;
-        public NewsService(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly ICommentService CommentService;
+        public NewsService(IUnitOfWork unitOfWork, IMapper mapper, ICommentService commentService)
         {
             _unitOfWork = unitOfWork;
             _Mapper = mapper;
+            CommentService = commentService;
         }
 
         public async Task CreateNews(NewsModelDTO news) // Добавляеем новости в БД по одной
@@ -92,7 +94,7 @@ namespace GoodNewsGenerator_Implementation_Services
                   .Select(n => n.NewsURL)
                   .ToListAsync();
 
-                const string SputnikUrl = "sputnik.by/economy/";
+                const string SputnikUrl = "sputnik.by/economy";
                 const string OnlinerUrl = "people.onliner";
                 const string beltaUrl = "belta.by";
 
@@ -119,6 +121,17 @@ namespace GoodNewsGenerator_Implementation_Services
                 }
             }
             return News;
+        }
+
+        public async Task<IEnumerable<CommentModelDTO>> GetAllComment(Guid id)
+        {
+            IEnumerable<CommentModelDTO> Comments = await CommentService.GetAllComents(id);
+
+            return Comments;
+        }
+        public async Task AddComment(CommentModelDTO comment)
+        {
+            await CommentService.AddComents(comment);
         }
     }
 }

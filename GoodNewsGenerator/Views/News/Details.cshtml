@@ -1,5 +1,6 @@
 ﻿@model ViewModelForDetailsNews
 
+
 <div>
     <div class="container castom">
         <ul class="media-list">
@@ -29,15 +30,38 @@
 
                 <div>
                     <p>
-                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <button id="GetComments" onclick="" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                             Все коментарии
                         </button>
                     </p>
 
                     <div class="collapse" id="collapseExample">
                         <div class="card card-body">
-                            Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-                        </div> 
+                            @{
+
+                                if (Model.Comments.Count() != 0)
+                                {
+                                    foreach (var comment in Model.Comments)
+                                    {
+
+                                        @await Html.PartialAsync("Comment", comment);
+                                    }
+
+                                }
+                                else
+                                {
+                                    <p>Нет соментариев</p>
+                                }
+
+                            }
+                        </div>
+                        <form asp-action="AddComment" asp-controller="News" asp-antiforgery="true" method="post">
+                            <p><b>Введите ваш отзыв:</b></p>
+                            <p><textarea rows="10" cols="45" asp-for="@Model.CommentText"></textarea></p>
+                            <input type="hidden" asp-for="@Model.NewsId" value="@Model.Id" />
+                            <p><input type="submit" value="Отправить"></p>
+                        </form>
+                       
                     </div>
                 </div>
 
