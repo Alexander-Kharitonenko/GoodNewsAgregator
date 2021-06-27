@@ -48,7 +48,9 @@ namespace GoodNewsGenerator
                 {
                     LoginPath = new PathString("/Account/Login"),
                     ExpireTimeSpan = TimeSpan.FromMinutes(5),
-                    AccessDeniedPath = new PathString("/Account/Login")
+                    AccessDeniedPath = new PathString("/Account/Login"),
+                    
+                    
                 });// настройка авторизациии на основе куки и  указание пути в случае если identituClame User == null
 
             services.AddDbContext<DbContextNewsGenerator>(options => options.UseSqlServer(ConfConectionString.GetConnectionString("DefaultConnection")));

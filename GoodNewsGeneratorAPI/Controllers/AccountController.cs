@@ -49,8 +49,9 @@ namespace GoodNewsGeneratorAPI.Controllers
                     {
                         user.Roles = await RoleCQRService.GetRoleById(new Guid("787d4edc-3590-4355-9da6-39d0198b63d1"));
                         await UserCQRService.СreateUser(user);
-                        ClaimsIdentity identity = GetIdentity(user);
-                        ResultGenerateToken Token = await JwtManager.GetTokens(user.Email, identity.Claims);
+                        UserModelDTO UserWthDb = await UserCQRService.GetUserBy(user.Email);
+                        ClaimsIdentity identity = GetIdentity(UserWthDb);
+                        ResultGenerateToken Token = await JwtManager.GetTokens(UserWthDb.Email, identity.Claims);
                         return Ok(Token);
                     }
 

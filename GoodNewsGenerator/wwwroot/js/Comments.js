@@ -1,18 +1,19 @@
-﻿let commentsDisplaySwitcherElement = document.getElementById('GetComments');
-let isCommentsDisplayed = false;
+﻿let commentsDisplaySwitcherElement = document.getElementById('GetComments'); // получаем html блок по id 
+let isCommentsDisplayed = false; //создаём флаг и зарание устанавливаем в false
 
-function toggleComments(newsId) {
+//функция получение и скытия коментариев
+function toggleComments(newsId) { 
     if (commentsDisplaySwitcherElement != null) {
         if (isCommentsDisplayed == true) {
             commentsDisplaySwitcherElement.innerHTML = 'Display comments';
-            document.getElementById('comments-container').innerHTML = '';
+            
         } else {
             commentsDisplaySwitcherElement.innerHTML = 'Hide comments';
-            let commentsContainer = document.getElementById('comments-container');
-            loadComments(newsId, commentsContainer);
+            let commentsContainer = document.getElementById('comments-container');// получаем весь html со всеми коментариями
+            loadComments(newsId, commentsContainer); // передаём все коментарии и id новости в функцию получения коментариев
 
         }
-        isCommentsDisplayed = !isCommentsDisplayed;
+        isCommentsDisplayed = !isCommentsDisplayed;// флаг отвечающий за отслеживания показаны ли коментарии устанавливаем в истену
     }
 
     commentsDisplaySwitcherElement.addEventListener('onclose', function () {
@@ -20,17 +21,19 @@ function toggleComments(newsId) {
     }, false);
 }
 
+
+// создаём гет запрос на получения всех коментариев из бд там храняться все коментарии которые уже отображен и те которе заберуться из бд  
 function loadComments(newsId, commentsContainer) {
-    let request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();// создаём http запрос
     //create request
-    request.open('GET', `/Comments/List?newsId=${newsId}`, true);
+    request.open('GET', `/News/Details?id=${newsId}`, true);//говорим что этот запрос типа get  указываем путь
     //create request handler
     request.onload = function () {
-        if (request.status >= 200 && request.status < 400) {
-            let resp = request.responseText;
-            commentsContainer.innerHTML = resp;
+        if (request.status >= 200 && request.status < 400) {// если ответ без ошибки и есть контент
+            let resp = request.responseText; // получаем ответ в переменную resp
+            commentsContainer.innerHTML = resp; //передаём ответ в html блок
 
-            document.getElementById('create-comment-btn')
+            document.getElementById('create-comment-btn')// получаем html по id
                 .addEventListener("click", createComment);
         }
     }
@@ -39,7 +42,7 @@ function loadComments(newsId, commentsContainer) {
 }
 
 function validateCommentData() {
-
+    
 }
 
 function createComment() {
@@ -49,9 +52,9 @@ function createComment() {
 
     validateCommentData();
 
-    var postRequest = new XMLHttpRequest();
-    postRequest.open("POST", '/Comments/Create', true);
-    postRequest.setRequestHeader('Content-Type', 'application/json');
+    var postRequest = new XMLHttpRequest(); // создаём http запрос
+    postRequest.open("POST", '/News/AddComment', true); // настраиваем http запрос говоря что он пост указывая одрес
+    postRequest.setRequestHeader('Content-Type', 'application/json');//настраиваем пост запроса указывая тип контента запроса json
 
     //let requestData = new {
     //    commentText: commentText

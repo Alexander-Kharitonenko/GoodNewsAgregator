@@ -28,15 +28,23 @@
                     </span>
                 </div>
 
+                <div class="media-body">
+                    <h6>
+                        <span class="lenta_textsmall">
+                            Коэффициент позитивности - @Model.CoefficientPositive
+                        </span>
+                    </h6>
+                </div>
+
                 <div>
                     <p>
-                        <button id="GetComments" onclick="" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <button id="GetComments" onclick="toggleComments(@Model.Id)" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                             Все коментарии
                         </button>
                     </p>
 
                     <div class="collapse" id="collapseExample">
-                        <div class="card card-body">
+                        <div id="comments-container" class="card card-body">
                             @{
 
                                 if (Model.Comments.Count() != 0)
@@ -57,11 +65,11 @@
                         </div>
                         <form asp-action="AddComment" asp-controller="News" asp-antiforgery="true" method="post">
                             <p><b>Введите ваш отзыв:</b></p>
-                            <p><textarea rows="10" cols="45" asp-for="@Model.CommentText"></textarea></p>
-                            <input type="hidden" asp-for="@Model.NewsId" value="@Model.Id" />
-                            <p><input type="submit" value="Отправить"></p>
+                            <p><textarea id="commentText" rows="10" cols="45" asp-for="@Model.CommentText"></textarea></p>
+                            <input id="newsId" type="hidden" asp-for="@Model.NewsId" value="@Model.Id" />
+                            <p><input id="create-comment-btn" type="submit" value="Отправить"></p>
                         </form>
-                       
+
                     </div>
                 </div>
 
@@ -70,3 +78,8 @@
 
     </div>
 </div>
+
+@section Scripts
+{
+    <script src="~/js/Comments.js"></script>
+}

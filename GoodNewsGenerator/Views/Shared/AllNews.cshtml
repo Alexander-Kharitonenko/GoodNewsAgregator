@@ -38,7 +38,15 @@
                     </span>
                 </div>
 
-               <a class="btn btn-large btn-info" asp-controller="News" asp-action="Details" asp-route-id="@Model.Id">Подробнее</a>   
+                <div class="media-body">
+                    <h6>
+                        <span class="lenta_textsmall">
+                            Коэффициент позитивности - @Model.CoefficientPositive
+                        </span>
+                    </h6>
+                </div>
+
+                <a class="btn btn-large btn-info" asp-controller="News" asp-action="Details" asp-route-id="@Model.Id">Подробнее</a>
             </li>
         </ul>
         

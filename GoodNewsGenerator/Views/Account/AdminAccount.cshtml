@@ -8,11 +8,12 @@
         <li><a class="dropdown-item" asp-action="Create" asp-controller="RssSources">Добавить RSS</a></li>
         <li><a class="dropdown-item" asp-action="Delete" asp-controller="RssSources">Удалить Rss</a></li>
         <li>
-            <form asp-action="GetNewsFromRss" asp-controller="News" method="post" asp-antiforgery="true">
-                <input type="submit" value="Звгрузить новые новости">
-            </form>
+            <div class="dropdown-item">
+                <form asp-action="GetNewsFromRss" asp-controller="News" method="post" asp-antiforgery="true">
+                    <input type="submit" value="Загрузить новые новости">
+                </form>
+            </div> 
         </li>
         <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="#">Separated link</a></li>
     </ul>
 </div>
