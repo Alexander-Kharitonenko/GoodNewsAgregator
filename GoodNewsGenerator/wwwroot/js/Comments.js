@@ -2,7 +2,8 @@
 let isCommentsDisplayed = false; //создаём флаг и зарание устанавливаем в false
 
 //функция получение и скытия коментариев
-function toggleComments(newsId) { 
+function toggleComments(newsId) {
+   
     if (commentsDisplaySwitcherElement != null) {
         if (isCommentsDisplayed == true) {
             commentsDisplaySwitcherElement.innerHTML = 'Display comments';
@@ -10,6 +11,7 @@ function toggleComments(newsId) {
         } else {
             commentsDisplaySwitcherElement.innerHTML = 'Hide comments';
             let commentsContainer = document.getElementById('comments-container');// получаем весь html со всеми коментариями
+            console.log(newsId);
             loadComments(newsId, commentsContainer); // передаём все коментарии и id новости в функцию получения коментариев
 
         }
@@ -26,13 +28,13 @@ function toggleComments(newsId) {
 function loadComments(newsId, commentsContainer) {
     let request = new XMLHttpRequest();// создаём http запрос
     //create request
+    console.log(newsId);
     request.open('GET', `/News/Details?id=${newsId}`, true);//говорим что этот запрос типа get  указываем путь
     //create request handler
     request.onload = function () {
         if (request.status >= 200 && request.status < 400) {// если ответ без ошибки и есть контент
             let resp = request.responseText; // получаем ответ в переменную resp
             commentsContainer.innerHTML = resp; //передаём ответ в html блок
-
             document.getElementById('create-comment-btn')// получаем html по id
                 .addEventListener("click", createComment);
         }
@@ -77,6 +79,7 @@ function createComment() {
 }
 
 var getCommentsIntervalId = setInterval(function () {
+    let newsId = document.getElementById('newsId').value;
     loadComments(newsId);
 }, 15000);
 

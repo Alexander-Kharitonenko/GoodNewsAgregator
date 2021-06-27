@@ -195,8 +195,6 @@ namespace GoodNewsGenerator.Controllers
                 };
                 return View(detailsNews);
             }
-                
-            
         }
 
        
