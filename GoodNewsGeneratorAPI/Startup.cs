@@ -68,13 +68,13 @@ namespace GoodNewsGeneratorAPI
                  options.SaveToken = true; // сохранить созданный токен в объекте HttpClient
                  options.TokenValidationParameters = new TokenValidationParameters
                  {
-                     ValidateIssuerSigningKey = true, // Проверьте ключ подписи издателя
+                     ValidateIssuerSigningKey = false, // Проверьте ключ подписи издателя
                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Key"])),//устанавливаем ключь шифрования для издателя
                      ValidateIssuer = true, //говорим что хотим валидировать издателя
                      ValidateAudience = true,// говорим что хотим валидировать получателя
                      ValidateLifetime = true,// проверять время жизни токена
-                     ValidIssuer = "Issuer", // устанавливаем имя издателя
-                     ValidAudience = "Audience",// устанавливаем имя получателя токена
+                     ValidIssuer = "NewsGenerator", // устанавливаем имя издателя
+                     ValidAudience = "User",// устанавливаем имя получателя токена
                      ClockSkew = TimeSpan.Zero,// указать сдвиг часового пояса между серверным временем и пользователем
                  };//настройка валидации параметров токена
              });

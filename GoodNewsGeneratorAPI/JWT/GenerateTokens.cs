@@ -21,11 +21,13 @@ namespace GoodNewsGeneratorAPI.JWT
     {
         private readonly IOptions<JwtOptions> Options;
         private readonly IMediator Mediator;
-       
+        private readonly IConfiguration StartapConfiguration;
+
         public GenerateTokens(IOptions<JwtOptions> options, IConfiguration startapConfiguration, IMediator mediator) 
         {
             Options = options;
             Mediator = mediator;
+            StartapConfiguration = startapConfiguration;
 
 
         }
@@ -36,8 +38,8 @@ namespace GoodNewsGeneratorAPI.JWT
                 Options.Value.Issuer,//Указываем издателя токена
                 Options.Value.Audience,// указываем получатея токена
                 claims,// передаём клеймсы в токен
-                expires: DateTime.Now.AddMinutes(Options.Value.TokenLifeTime),// устанавливаем время жизни токенна 
-                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Options.Value.Key)), SecurityAlgorithms.HmacSha256Signature));// настраиваем тип шифрованя и тип кодировки , передаём ключь для шифрования
+                expires: DateTime.Now.AddSeconds(Options.Value.TokenLifeTime),// устанавливаем время жизни токенна 
+                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(StartapConfiguration["JWT:Key"])), SecurityAlgorithms.HmacSha256Signature));// настраиваем тип шифрованя и тип кодировки , передаём ключь для шифрования
                                                                                                                                                                          // создаём новый объект токена передавая в него все необходимые параметры
 
             string token = new JwtSecurityTokenHandler().WriteToken(createToken);// создвем токен из объекта токена
@@ -61,7 +63,7 @@ namespace GoodNewsGeneratorAPI.JWT
             {
                 Id = Guid.NewGuid(),
                 CreateTimeToken = DateTime.Now,
-                ExpiresToken = DateTime.Now.AddHours(1),
+                ExpiresToken = DateTime.Now.AddSeconds(Options.Value.TokenLifeTime),
                 Key = Guid.NewGuid().ToString("D"),
                 UserId = userId
 
