@@ -19,5 +19,7 @@ namespace DTO_Models_For_GoodNewsGenerator
 
         public Guid NewsId { get; set; }
         public virtual NewsModelDTO Newss { get; set; }
+
+        
     }
 }

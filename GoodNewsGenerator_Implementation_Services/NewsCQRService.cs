@@ -70,7 +70,7 @@ namespace GoodNewsGenerator_Implementation_Services
             ConcurrentBag<NewsModelDTO> news = new ConcurrentBag<NewsModelDTO>();
 
             //4.Извлекать новости из рсс
-            Parallel.ForEach(allRss, async (Rss) =>
+            Parallel.ForEach(allRss, (Rss) =>
             {
                 //5.Прочитать и распарсить rss источник
                 using (XmlReader reader = XmlReader.Create(Rss.SourseURL))
@@ -129,6 +129,8 @@ namespace GoodNewsGenerator_Implementation_Services
             return news;
         }
 
+        
+
         public async Task CoefficientPositivity()
         {
 
@@ -155,13 +157,7 @@ namespace GoodNewsGenerator_Implementation_Services
                     HttpResponseMessage respons = await request.SendAsync(postRequest); // SendAsync отправляет наш запрос и возвращает ответ
                     data = await respons.Content.ReadAsStringAsync();
 
-                    await using (FileStream sr = File.OpenRead($"{path}"))
-                    {
-                        byte[] array = new byte[sr.Length]; // создаём буфир записи а который будут записан считанный текст в виде массива байт
-
-                        sr.Read(array, 0, array.Length); // считываем данные и записываем в буфер
-
-                        string textFromFile = System.Text.Encoding.UTF8.GetString(array);// декодируем байты в строку 
+                        string textFromFile = File.ReadAllText(path);
 
                         Dictionary<string, string> Dictionari = JsonConvert.DeserializeObject<Dictionary<string, string>>(textFromFile);
 
@@ -186,7 +182,7 @@ namespace GoodNewsGenerator_Implementation_Services
 
                         news.CoefficientPositive = Coefficient;
                         Coefficient = 0;
-                    }
+                    
                 }
             }
             await Mediator.Send(new UpdateNewsCommand() { updateNews = News });
